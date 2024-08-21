@@ -282,14 +282,13 @@ const Timer = () => {
             </form>
           </div>
         </div>
-            href="https://renedeanda.com?utm_source=pomodoro_timer&utm_medium=referral"
         <div className="text-center mt-6">
           <a 
             target="_blank" 
             rel="noopener noreferrer" 
             className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-full transition duration-300"
           >
-            Made with 💛 + 🤖 by René DeAnda
+            Made with 🧡 + 🤖 by René DeAnda
           </a>
         </div>
         <AnimatePresence>
