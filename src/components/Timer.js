@@ -212,13 +212,14 @@ const Timer = () => {
             About
           </button>
         </nav>
-        <div className="max-w-sm sm:max-w-md lg:max-w-lg mx-auto bg-white bg-opacity-20 backdrop-blur-md p-4 sm:p-8 lg:p-10 rounded-lg shadow-lg">
+        <div className="max-w-xs sm:max-w-md lg:max-w-lg mx-auto bg-white bg-opacity-20 backdrop-blur-md p-4 sm:p-8 lg:p-10 rounded-lg shadow-lg">
           <div className="flex justify-center space-x-2 sm:space-x-4 lg:space-x-6 mb-4 sm:mb-8">
             {['pomodoro', 'shortBreak', 'longBreak'].map((timerMode) => (
               <button
                 key={timerMode}
                 className={`px-3 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-3 rounded-full text-base sm:text-lg lg:text-xl ${
-                  mode === timerMode ? `${modeColors[timerMode].bg} text-white` : `${modeColors[timerMode].text} bg-white bg-opacity-80`                }`}
+                  mode === timerMode ? `${modeColors[timerMode].bg} text-white` : `${modeColors[timerMode].text} bg-white bg-opacity-80`
+                }`}
                 onClick={() => setTimerMode(timerMode)}
               >
                 {timerMode === 'pomodoro' ? 'Pomodoro' : timerMode === 'shortBreak' ? 'Short Break' : 'Long Break'}
@@ -229,7 +230,7 @@ const Timer = () => {
             className="text-7xl sm:text-9xl lg:text-10xl font-bold text-white text-center mb-4 sm:mb-8 lg:mb-10"
             initial={{ scale: 1 }}
             animate={{ scale: isActive ? 1.1 : 1 }}
-            transition={{ duration: 0.5 }}
+                       transition={{ duration: 0.5 }}
           >
             {formatTime(time)}
           </motion.div>
@@ -376,4 +377,3 @@ const Timer = () => {
 };
 
 export default Timer;
-               
