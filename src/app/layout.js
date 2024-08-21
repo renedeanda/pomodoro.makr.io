@@ -29,7 +29,6 @@ export const metadata = {
     title: 'Pomodoro Timer',
     description: 'Boost your productivity with our Pomodoro Timer app',
     images: ['https://pomodoro.makr.io/og-image.png'],
-    creator: '@renedeanda',
   },
   icons: {
     icon: '/favicon.svg',
