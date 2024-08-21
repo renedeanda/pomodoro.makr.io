@@ -58,6 +58,7 @@ const Timer = () => {
     updateTabTitle(time);
     updateFaviconColor(modeColors[mode].hex);
     updateStatusBarColor(modeColors[mode].hex);
+    updateBodyBackgroundColor(modeColors[mode].hex);
   }, [time, mode]);
 
   useEffect(() => {
@@ -104,6 +105,10 @@ const Timer = () => {
     if (appleMetaThemeColor) {
       appleMetaThemeColor.setAttribute('content', color);
     }
+  };
+
+  const updateBodyBackgroundColor = (color) => {
+    document.body.style.backgroundColor = color;
   };
 
   const requestNotificationPermission = async () => {
@@ -200,7 +205,7 @@ const Timer = () => {
             className="text-7xl sm:text-9xl font-bold text-white text-center mb-4 sm:mb-8"
             initial={{ scale: 1 }}
             animate={{ scale: isActive ? 1.1 : 1 }}
-            transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.5 }}
           >
             {formatTime(time)}
           </motion.div>
@@ -212,7 +217,7 @@ const Timer = () => {
               {isActive ? 'PAUSE' : 'START'}
             </button>
           </div>
-                    <div className="text-white text-center mb-4 sm:mb-8 text-base sm:text-lg">
+          <div className="text-white text-center mb-4 sm:mb-8 text-base sm:text-lg">
             {mode === 'pomodoro' ? 'Time to focus!' : 'Time for a break!'}
           </div>
           <div className="bg-white bg-opacity-80 p-4 sm:p-5 rounded-lg mb-4">
@@ -231,7 +236,7 @@ const Timer = () => {
                   </div>
                   <div className="flex items-center">
                     <button onClick={() => updateTaskEstimate(task.id, -1)} className="text-gray-600 px-2 sm:px-3">-</button>
-                    <span className="text-gray-800 mx-2 sm:mx-3">{task.estimatedPomodoros}</span>
+                    <span className="text-gray-800 mx-2 sm:mx-3">{task.estimatedPomodoros} ⏲️</span>
                     <button onClick={() => updateTaskEstimate(task.id, 1)} className="text-gray-600 px-2 sm:px-3">+</button>
                     <button onClick={() => removeTask(task.id)} className="text-gray-600 ml-2 sm:ml-3">×</button>
                   </div>
@@ -252,7 +257,7 @@ const Timer = () => {
         </div>
         <div className="text-center mt-4 sm:mt-8">
           <a href="https://renedeanda.com?utm_source=pomodoro_timer&utm_medium=referral" target="_blank" rel="noopener noreferrer" className="text-white hover:underline text-base sm:text-lg">
-            Made with 🧡 + 🤖 by René DeAnda
+            Made with 💛 + 🤖 by René DeAnda
           </a>
         </div>
         <AnimatePresence>
