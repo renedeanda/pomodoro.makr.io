@@ -284,6 +284,7 @@ const Timer = () => {
         </div>
         <div className="text-center mt-6">
           <a 
+            href="https://renedeanda.com?utm_source=pomodoro_timer" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-full transition duration-300"
