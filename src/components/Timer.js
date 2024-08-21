@@ -110,7 +110,7 @@ const Timer = () => {
     if (favicon) {
       const svgIcon = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45" fill="${color}" />
+          <rect width="100" height="100" rx="20" fill="${color}" />
           <text x="50" y="50" font-family="Arial, sans-serif" font-size="60" text-anchor="middle" dy=".3em" fill="white">⏲️</text>
         </svg>
       `;
@@ -218,9 +218,8 @@ const Timer = () => {
             {['pomodoro', 'shortBreak', 'longBreak'].map((timerMode) => (
               <button
                 key={timerMode}
-                className={`px-3 py-2 rounded-full text-sm sm:text-base font-medium ${
-                  mode === timerMode ? `${modeColors[timerMode].bg} text-white` : `${modeColors[timerMode].text} bg-white bg-opacity-80`
-                }`}
+                className={`px-3 py-2 rounded-full text-sm sm:text-base font-medium ${mode === timerMode ? `${modeColors[timerMode].bg} text-white` : `${modeColors[timerMode].text} bg-white bg-opacity-80`
+                  }`}
                 onClick={() => setTimerMode(timerMode)}
               >
                 {timerMode === 'pomodoro' ? 'Pomodoro' : timerMode === 'shortBreak' ? 'Short Break' : 'Long Break'}
@@ -251,21 +250,23 @@ const Timer = () => {
             <h2 className="text-xl font-semibold text-gray-800 mb-3">Tasks</h2>
             <ul className="space-y-2 mb-3">
               {tasks.map(task => (
-                <li key={task.id} className="flex items-center justify-between text-sm sm:text-base">
-                  <div className="flex items-center">
+                <li key={task.id} className="flex items-center justify-between text-base sm:text-lg py-2">
+                  <div className="flex items-center flex-grow mr-2">
                     <input
                       type="checkbox"
                       checked={task.completed}
                       onChange={() => toggleTask(task.id)}
-                      className="mr-2 w-5 h-5"
+                      className="mr-3 w-6 h-6 cursor-pointer"
                     />
-                    <span className={`text-gray-800 ${task.completed ? 'line-through' : ''}`}>{task.text}</span>
+                    <span className={`text-gray-800 ${task.completed ? 'line-through' : ''} cursor-pointer`} onClick={() => toggleTask(task.id)}>
+                      {task.text}
+                    </span>
                   </div>
                   <div className="flex items-center">
-                    <button onClick={() => updateTaskEstimate(task.id, -1)} className="text-gray-600 px-2 text-lg">-</button>
-                    <span className="text-gray-800 mx-2">{task.estimatedPomodoros}</span>
-                    <button onClick={() => updateTaskEstimate(task.id, 1)} className="text-gray-600 px-2 text-lg">+</button>
-                    <button onClick={() => removeTask(task.id)} className="text-gray-600 ml-2 text-lg">×</button>
+                    <button onClick={() => updateTaskEstimate(task.id, -1)} className="text-gray-600 px-3 py-1 text-xl hover:bg-gray-200 rounded">-</button>
+                    <span className="text-gray-800 mx-2 min-w-[1.5rem] text-center">{task.estimatedPomodoros}</span>
+                    <button onClick={() => updateTaskEstimate(task.id, 1)} className="text-gray-600 px-3 py-1 text-xl hover:bg-gray-200 rounded">+</button>
+                    <button onClick={() => removeTask(task.id)} className="text-gray-600 ml-2 px-3 py-1 text-xl hover:bg-gray-200 rounded">×</button>
                   </div>
                 </li>
               ))}
@@ -283,10 +284,10 @@ const Timer = () => {
           </div>
         </div>
         <div className="text-center mt-6">
-          <a 
-            href="https://renedeanda.com?utm_source=pomodoro_timer" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://renedeanda.com?utm_source=pomodoro_timer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-full transition duration-300"
           >
             Made with 🧡 + 🤖 by René DeAnda
