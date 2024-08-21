@@ -13,7 +13,8 @@
     "react-dom": "^18",
     "next": "14.2.5",
     "framer-motion": "^10.12.16",
-    "react-confetti": "^6.1.0"
+    "react-confetti": "^6.1.0",
+    "react-use": "^17.5.1"
   },
   "devDependencies": {
     "postcss": "^8",
