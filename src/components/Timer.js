@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
+import TimeReferenceBars from './TimeReferenceBars';
 
 const Timer = () => {
   const [time, setTime] = useState(25 * 60);
@@ -106,6 +107,7 @@ const Timer = () => {
 
   const updateFaviconColor = (color) => {
     const favicon = document.querySelector('link[rel="icon"]');
+    console.log('Updating favicon color:', color);
 
     if (favicon) {
       const svgIcon = `
@@ -118,6 +120,9 @@ const Timer = () => {
       const url = URL.createObjectURL(blob);
 
       favicon.href = url;
+      console.log('Favicon updated');
+    } else {
+      console.log('Favicon element not found');
     }
   };
 
@@ -213,6 +218,16 @@ const Timer = () => {
             About
           </button>
         </nav>
+        <div className="text-center mb-6">
+          <a
+            href="https://renedeanda.com?utm_source=pomodoro_timer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-full transition duration-300"
+          >
+            Made with 🧡 + 🤖 by René DeAnda
+          </a>
+        </div>
         <div className="max-w-sm sm:max-w-md mx-auto bg-white bg-opacity-20 backdrop-blur-md p-6 rounded-lg shadow-lg">
           <div className="flex justify-center space-x-2 mb-6">
             {['pomodoro', 'shortBreak', 'longBreak'].map((timerMode) => (
@@ -245,6 +260,9 @@ const Timer = () => {
           </div>
           <div className="text-white text-center mb-6 text-lg">
             {mode === 'pomodoro' ? 'Time to focus!' : 'Time for a break!'}
+          </div>
+          <div className="mb-6">
+            <TimeReferenceBars mode={mode} modeColors={modeColors} />
           </div>
           <div className="bg-white bg-opacity-80 p-4 rounded-lg mb-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-3">Tasks</h2>
@@ -282,16 +300,6 @@ const Timer = () => {
               <button type="submit" className={`${modeColors[mode].bg} text-white px-4 py-2 rounded-r-lg font-semibold`}>Add</button>
             </form>
           </div>
-        </div>
-        <div className="text-center mt-6">
-          <a
-            href="https://renedeanda.com?utm_source=pomodoro_timer"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-full transition duration-300"
-          >
-            Made with 🧡 + 🤖 by René DeAnda
-          </a>
         </div>
         <AnimatePresence>
           {showCelebration && (
