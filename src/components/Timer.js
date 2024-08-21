@@ -264,41 +264,49 @@ const Timer = () => {
             <TimeReferenceBars mode={mode} modeColors={modeColors} />
           </div>
           <div className="bg-white bg-opacity-80 p-4 rounded-lg mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">Tasks</h2>
-            <ul className="space-y-2 mb-3">
-              {tasks.map(task => (
-                <li key={task.id} className="flex items-center justify-between text-base sm:text-lg py-2">
-                  <div className="flex items-center flex-grow mr-2">
-                    <input
-                      type="checkbox"
-                      checked={task.completed}
-                      onChange={() => toggleTask(task.id)}
-                      className="mr-3 w-6 h-6 cursor-pointer"
-                    />
-                    <span className={`text-gray-800 ${task.completed ? 'line-through' : ''} cursor-pointer`} onClick={() => toggleTask(task.id)}>
-                      {task.text}
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <button onClick={() => updateTaskEstimate(task.id, -1)} className="text-gray-600 px-3 py-1 text-xl hover:bg-gray-200 rounded">-</button>
-                    <span className="text-gray-800 mx-2 min-w-[1.5rem] text-center">{task.estimatedPomodoros}</span>
-                    <button onClick={() => updateTaskEstimate(task.id, 1)} className="text-gray-600 px-3 py-1 text-xl hover:bg-gray-200 rounded">+</button>
-                    <button onClick={() => removeTask(task.id)} className="text-gray-600 ml-2 px-3 py-1 text-xl hover:bg-gray-200 rounded">×</button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <form onSubmit={addTask} className="flex">
-              <input
-                type="text"
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-                placeholder="Add a new task"
-                className="flex-grow px-3 py-2 rounded-l-lg border-2 border-r-0 border-gray-300 focus:outline-none focus:border-gray-500 text-gray-800"
-              />
-              <button type="submit" className={`${modeColors[mode].bg} text-white px-4 py-2 rounded-r-lg font-semibold`}>Add</button>
-            </form>
-          </div>
+  <h2 className="text-xl font-semibold text-gray-800 mb-3">Tasks</h2>
+  <ul className="space-y-2 mb-3">
+    {tasks.map(task => (
+      <li key={task.id} className="flex justify-between items-center py-2">
+        <div className="flex-grow mr-2 flex items-center">
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => toggleTask(task.id)}
+            className="mr-3 w-6 h-6 cursor-pointer"
+          />
+          <span className={`text-gray-800 ${task.completed ? 'line-through' : ''} cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap`} onClick={() => toggleTask(task.id)}>
+            {task.text}
+          </span>
+        </div>
+        <div className="flex items-center">
+          <button onClick={() => updateTaskEstimate(task.id, -1)} className="text-gray-600 px-3 py-1 text-xl hover:bg-gray-200 rounded">
+            -
+          </button>
+          <span className="text-gray-800 mx-2 min-w-[1.5rem] text-center">{task.estimatedPomodoros}</span>
+          <button onClick={() => updateTaskEstimate(task.id, 1)} className="text-gray-600 px-3 py-1 text-xl hover:bg-gray-200 rounded">
+            +
+          </button>
+          <button onClick={() => removeTask(task.id)} className="text-gray-600 ml-2 px-3 py-1 text-xl hover:bg-gray-200 rounded">
+            ×
+          </button>
+        </div>
+      </li>
+    ))}
+  </ul>
+  <form onSubmit={addTask} className="flex">
+    <input
+      type="text"
+      value={newTask}
+      onChange={(e) => setNewTask(e.target.value)}
+      placeholder="Add a new task"
+      className="flex-grow px-3 py-2 rounded-l-lg border-2 border-r-0 border-gray-300 focus:outline-none focus:border-gray-500 text-gray-800"
+    />
+    <button type="submit" className={`px-4 py-2 rounded-r-lg font-semibold ${modeColors[mode].bg} text-white`}>
+      Add
+    </button>
+  </form>
+</div>
         </div>
         <AnimatePresence>
           {showCelebration && (
