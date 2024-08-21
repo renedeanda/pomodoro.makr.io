@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
 import TimeReferenceBars from './TimeReferenceBars';
+import Confetti from 'react-confetti';
+import { useWindowSize } from 'react-use';
 
 const Timer = () => {
   const [time, setTime] = useState(25 * 60);
@@ -13,6 +15,8 @@ const Timer = () => {
   const [newTask, setNewTask] = useState('');
   const [showCelebration, setShowCelebration] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
+
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -107,8 +111,6 @@ const Timer = () => {
 
   const updateFaviconColor = (color) => {
     const favicon = document.querySelector('link[rel="icon"]');
-    console.log('Updating favicon color:', color);
-
     if (favicon) {
       const svgIcon = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -120,9 +122,6 @@ const Timer = () => {
       const url = URL.createObjectURL(blob);
 
       favicon.href = url;
-      console.log('Favicon updated');
-    } else {
-      console.log('Favicon element not found');
     }
   };
 
@@ -152,7 +151,7 @@ const Timer = () => {
     if (Notification.permission === 'granted') {
       new Notification('Pomodoro Timer', {
         body: `${mode === 'pomodoro' ? 'Time for a break!' : 'Time to focus!'}`,
-        icon: '/favicon.svg'
+        icon: '/favicon.svg',
       });
     }
   };
@@ -179,7 +178,7 @@ const Timer = () => {
 
     if (updatedTasks.every(task => task.completed)) {
       setShowCelebration(true);
-      setTimeout(() => setShowCelebration(false), 3000);
+      setTimeout(() => setShowCelebration(false), 5000); // show confetti for 5 seconds
     }
   };
 
@@ -241,7 +240,7 @@ const Timer = () => {
               </button>
             ))}
           </div>
-          <motion.div
+                   <motion.div
             className="text-7xl sm:text-8xl font-bold text-white text-center mb-6"
             initial={{ scale: 1 }}
             animate={{ scale: isActive ? 1.1 : 1 }}
@@ -309,7 +308,11 @@ const Timer = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <div className="text-6xl">🎉</div>
+              <Confetti
+                width={width}
+                height={height}
+                recycle={false} // ensures confetti doesn't loop
+              />
             </motion.div>
           )}
         </AnimatePresence>
