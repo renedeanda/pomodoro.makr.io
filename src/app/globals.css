@@ -26,8 +26,9 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Custom styles for better mobile experience */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
   }
 }
