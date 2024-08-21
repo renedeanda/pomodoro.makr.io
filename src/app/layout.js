@@ -11,7 +11,7 @@ export const metadata = {
   author: 'René DeAnda',
   openGraph: {
     title: 'Pomodoro Timer',
-    description: 'Boost your productivity with our Pomodoro Timer app',
+    description: 'A simple and effective Pomodoro timer app to boost your productivity',
     url: 'https://pomodoro.makr.io',
     siteName: 'Pomodoro Timer',
     images: [
@@ -27,7 +27,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Pomodoro Timer',
-    description: 'Boost your productivity with our Pomodoro Timer app',
+    description: 'A simple and effective Pomodoro timer app to boost your productivity',
     images: ['https://pomodoro.makr.io/og-image.png'],
   },
   icons: {
