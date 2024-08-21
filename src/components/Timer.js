@@ -91,8 +91,18 @@ const Timer = () => {
 
   const updateFaviconColor = (color) => {
     const favicon = document.querySelector('link[rel="icon"]');
+
     if (favicon) {
-      favicon.href = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="${color}"/><text x="50" y="50" font-family="Arial, sans-serif" font-size="60" text-anchor="middle" dy=".3em" fill="white">⏲️</text></svg>`;
+      const svgIcon = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" fill="${color}" />
+          <text x="50" y="50" font-family="Arial, sans-serif" font-size="60" text-anchor="middle" dy=".3em" fill="white">⏲️</text>
+        </svg>
+      `;
+      const blob = new Blob([svgIcon], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+
+      favicon.href = url;
     }
   };
 
@@ -205,7 +215,7 @@ const Timer = () => {
             className="text-7xl sm:text-9xl font-bold text-white text-center mb-4 sm:mb-8"
             initial={{ scale: 1 }}
             animate={{ scale: isActive ? 1.1 : 1 }}
-                        transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5 }}
           >
             {formatTime(time)}
           </motion.div>
@@ -215,48 +225,77 @@ const Timer = () => {
               onClick={toggleTimer}
             >
               {isActive ? 'PAUSE' : 'START'}
-            </button>
+                          </button>
           </div>
           <div className="text-white text-center mb-4 sm:mb-8 text-base sm:text-lg">
             {mode === 'pomodoro' ? 'Time to focus!' : 'Time for a break!'}
           </div>
-          <div className="bg-white bg-opacity-80 p-4 sm:p-5 rounded-lg mb-4">
+          <div className="bg-white bg-opacity-80 p-4 sm:p-6 rounded-lg mb-4">
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2 sm:mb-4">Tasks</h2>
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {tasks.map(task => (
-                <li key={task.id} className="flex items-center justify-between text-base sm:text-lg">
+                <li key={task.id} className="flex items-center justify-between text-lg sm:text-xl">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
                       checked={task.completed}
                       onChange={() => toggleTask(task.id)}
-                      className="mr-2"
+                      className="mr-3 w-6 h-6 sm:w-8 sm:h-8"
                     />
-                    <span className={`text-gray-800 ${task.completed ? 'line-through' : ''}`}>{task.text}</span>
+                    <span className={`text-gray-800 ${task.completed ? 'line-through' : ''}`}>
+                      {task.text}
+                    </span>
                   </div>
                   <div className="flex items-center">
-                    <button onClick={() => updateTaskEstimate(task.id, -1)} className="text-gray-600 px-2 sm:px-3">-</button>
-                    <span className="text-gray-800 mx-2 sm:mx-3">{task.estimatedPomodoros} ⏲️</span>
-                    <button onClick={() => updateTaskEstimate(task.id, 1)} className="text-gray-600 px-2 sm:px-3">+</button>
-                    <button onClick={() => removeTask(task.id)} className="text-gray-600 ml-2 sm:ml-3">×</button>
+                    <button
+                      onClick={() => updateTaskEstimate(task.id, -1)}
+                      className="text-gray-600 px-2 sm:px-3 text-lg sm:text-xl"
+                    >
+                      -
+                    </button>
+                    <span className="text-gray-800 mx-2 sm:mx-3 text-lg sm:text-xl">
+                      {task.estimatedPomodoros} ⏲️
+                    </span>
+                    <button
+                      onClick={() => updateTaskEstimate(task.id, 1)}
+                      className="text-gray-600 px-2 sm:px-3 text-lg sm:text-xl"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => removeTask(task.id)}
+                      className="text-gray-600 ml-3 sm:ml-4 text-lg sm:text-xl"
+                    >
+                      ×
+                    </button>
                   </div>
                 </li>
               ))}
             </ul>
-            <form onSubmit={addTask} className="mt-2 sm:mt-4 flex">
+            <form onSubmit={addTask} className="mt-4 sm:mt-6 flex">
               <input
                 type="text"
                 value={newTask}
                 onChange={(e) => setNewTask(e.target.value)}
                 placeholder="Add a new task"
-                className="flex-grow px-3 py-2 sm:px-4 sm:py-3 rounded-l-lg border-2 border-r-0 border-gray-300 focus:outline-none focus:border-gray-500 text-gray-800 text-base sm:text-lg"
+                className="flex-grow px-4 py-2 sm:px-5 sm:py-3 rounded-l-lg border-2 border-r-0 border-gray-300 focus:outline-none focus:border-gray-500 text-gray-800 text-lg sm:text-xl"
               />
-              <button type="submit" className={`${modeColors[mode].bg} text-white px-4 py-2 sm:px-5 sm:py-3 rounded-r-lg text-base sm:text-lg`}>Add</button>
+              <button
+                type="submit"
+                className={`${modeColors[mode].bg} text-white px-4 py-2 sm:px-6 sm:py-3 rounded-r-lg text-lg sm:text-xl`}
+              >
+                Add
+              </button>
             </form>
           </div>
         </div>
-        <div className="text-center mt-4 sm:mt-8">
-          <a href="https://renedeanda.com?utm_source=pomodoro_timer&utm_medium=referral" target="_blank" rel="noopener noreferrer" className="text-white hover:underline text-base sm:text-lg">
+        <div className="text-center mt-6 sm:mt-8">
+          <a
+            href="https://renedeanda.com?utm_source=pomodoro_timer&utm_medium=referral"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:underline text-lg sm:text-xl"
+          >
             Made with 💛 + 🤖 by René DeAnda
           </a>
         </div>
