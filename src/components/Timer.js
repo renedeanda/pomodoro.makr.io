@@ -231,7 +231,7 @@ const Timer = () => {
                   </div>
                   <div className="flex items-center">
                     <button onClick={() => updateTaskEstimate(task.id, -1)} className="text-gray-600 px-2 sm:px-3">-</button>
-                    <span className="text-gray-800 mx-2 sm:mx-3">{task.estimatedPomodoros} Pomodoro sessions</span>
+                    <span className="text-gray-800 mx-2 sm:mx-3">{task.estimatedPomodoros}</span>
                     <button onClick={() => updateTaskEstimate(task.id, 1)} className="text-gray-600 px-2 sm:px-3">+</button>
                     <button onClick={() => removeTask(task.id)} className="text-gray-600 ml-2 sm:ml-3">×</button>
                   </div>
