@@ -57,6 +57,7 @@ const Timer = () => {
   useEffect(() => {
     updateTabTitle(time);
     updateFaviconColor(modeColors[mode].hex);
+    updateStatusBarColor(modeColors[mode].hex);
   }, [time, mode]);
 
   useEffect(() => {
@@ -91,6 +92,13 @@ const Timer = () => {
     const favicon = document.querySelector('link[rel="icon"]');
     if (favicon) {
       favicon.href = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="${color}"/><text x="50" y="50" font-family="Arial, sans-serif" font-size="60" text-anchor="middle" dy=".3em" fill="white">⏲️</text></svg>`;
+    }
+  };
+
+  const updateStatusBarColor = (color) => {
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', color);
     }
   };
 
@@ -150,12 +158,13 @@ const Timer = () => {
   };
 
   const openPerplexitySearch = () => {
-    window.open('https://www.perplexity.ai/search?q=What+is+the+Pomodoro+Technique', '_blank');
+    window.open('https://www.perplexity.ai/search?q=What+is+the+Pomodoro+Technique&utm_source=PomodoroTimer', '_blank');
   };
 
   return (
     <>
       <Head>
+        <meta name="theme-color" content={modeColors[mode].hex} />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
       <div className={`min-h-screen ${modeColors[mode].bg} p-4 sm:p-8`}>
@@ -168,11 +177,6 @@ const Timer = () => {
             About
           </button>
         </nav>
-        <div className="text-center mb-4 sm:mb-8">
-          <a href="https://renedeanda.com" target="_blank" rel="noopener noreferrer" className="text-white hover:underline text-sm sm:text-base">
-            Made with ❤️ + 🤖 by René DeAnda
-          </a>
-        </div>
         <div className="max-w-sm sm:max-w-md mx-auto bg-white bg-opacity-20 backdrop-blur-md p-4 sm:p-8 rounded-lg shadow-lg">
           <div className="flex justify-center space-x-2 sm:space-x-4 mb-4 sm:mb-8">
             {['pomodoro', 'shortBreak', 'longBreak'].map((timerMode) => (
@@ -206,7 +210,7 @@ const Timer = () => {
           <div className="text-white text-center mb-4 sm:mb-8 text-sm sm:text-base">
             {mode === 'pomodoro' ? 'Time to focus!' : 'Time for a break!'}
           </div>
-          <div className="bg-white bg-opacity-80 p-3 sm:p-4 rounded-lg mb-4">
+                   <div className="bg-white bg-opacity-80 p-3 sm:p-4 rounded-lg mb-4">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 sm:mb-4">Tasks</h2>
             <ul className="space-y-2">
               {tasks.map(task => (
@@ -240,6 +244,11 @@ const Timer = () => {
               <button type="submit" className={`${modeColors[mode].bg} text-white px-3 py-1 sm:px-4 sm:py-2 rounded-r-lg text-sm sm:text-base`}>Add</button>
             </form>
           </div>
+        </div>
+        <div className="text-center mt-4 sm:mt-8">
+          <a href="https://renedeanda.com?utm_source=pomodoro_timer&utm_medium=referral" target="_blank" rel="noopener noreferrer" className="text-white hover:underline text-sm sm:text-base">
+            Made with 💛 + 🤖 by René DeAnda
+          </a>
         </div>
         <AnimatePresence>
           {showCelebration && (
