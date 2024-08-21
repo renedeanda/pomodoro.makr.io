@@ -8,10 +8,25 @@ const Timer = () => {
   const [time, setTime] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState('pomodoro');
-  const [tasks, setTasks] = useState(() => JSON.parse(localStorage.getItem('tasks')) || []);
+  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [showCelebration, setShowCelebration] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedTasks = localStorage.getItem('tasks');
+      if (storedTasks) {
+        setTasks(JSON.parse(storedTasks));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  }, [tasks]);
 
   const modeColors = {
     pomodoro: { bg: 'bg-rose-400', text: 'text-rose-400', hex: '#FB7185' },
@@ -60,10 +75,6 @@ const Timer = () => {
     updateStatusBarColor(modeColors[mode].hex);
     updateBodyBackgroundColor(modeColors[mode].hex);
   }, [time, mode]);
-
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
 
   useEffect(() => {
     requestNotificationPermission();
@@ -206,9 +217,8 @@ const Timer = () => {
             {['pomodoro', 'shortBreak', 'longBreak'].map((timerMode) => (
               <button
                 key={timerMode}
-                                className={`px-3 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-3 rounded-full text-base sm:text-lg lg:text-xl ${
-                  mode === timerMode ? `${modeColors[timerMode].bg} text-white` : `${modeColors[timerMode].text} bg-white bg-opacity-80`
-                }`}
+                className={`px-3 py-1 sm:px-4 sm:py-2 lg:px-5 lg:py-3 rounded-full text-base sm:text-lg lg:text-xl ${
+                  mode === timerMode ? `${modeColors[timerMode].bg} text-white` : `${modeColors[timerMode].text} bg-white bg-opacity-80`                }`}
                 onClick={() => setTimerMode(timerMode)}
               >
                 {timerMode === 'pomodoro' ? 'Pomodoro' : timerMode === 'shortBreak' ? 'Short Break' : 'Long Break'}
@@ -366,3 +376,4 @@ const Timer = () => {
 };
 
 export default Timer;
+               
